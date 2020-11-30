@@ -203,6 +203,22 @@ class SignupPageState extends State<SignupPage> {
                     textAlign: TextAlign.center,
                   ),
                   onPressed: () {
+                    String nome = txtNome.text;
+                    String email = txtEmail.text;
+                    String senha = txtSenha.text;
+
+                    db.collection(colecao)
+                      .add({'nome': nome, 'email': email, 'senha': senha})
+                      .then((value) => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          )
+                        }
+                      )
+                      .catchError((error) => print("Erro ao cadastrar"));
                     // setState(() {
                     //   Usuario dados = new Usuario();
                     //   dados.nome = txtNome.text;

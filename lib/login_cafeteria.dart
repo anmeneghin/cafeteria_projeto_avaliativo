@@ -39,17 +39,23 @@ class LoginPageState extends State<LoginPage> {
     listen?.cancel();
 
     //retornar dados da coleção e inserir na lista dinâmica
-    listen = db.collection(colecao).snapshots().listen((res) {
+    listen = db.collection("usuario").snapshots().listen((res) {
+      debugPrint('CHEGOOOU');
+      var teste = res.docs.toList();
+      debugPrint('res: $teste');
+
       setState(() {
         listaDeUsuarios =
             res.docs.map((doc) => Usuario.fromMap(doc.data(), doc.id)).toList();
+
+        debugPrint('listaDeUsuarios: $listaDeUsuarios');
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Usuario> listaDeUsuarios = ModalRoute.of(context).settings.arguments;
+    // List<Usuario> listaDeUsuarios = ModalRoute.of(context).settings.arguments;
 
     var txtEmail = TextEditingController();
     var txtSenha = TextEditingController();
@@ -165,27 +171,40 @@ class LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   onPressed: () {
-                    botaoLogar(context);
-                    // Dados dados = new Dados();
-                    // dados.email = "administrador@gmail.com";
-                    // dados.senha = "123";
-                    // listaDeUsuarios.add(dados);
-                    // bool ok = false;
-                    // String email = txtEmail.text;
-                    // String senha = txtSenha.text;
-                    // listaDeUsuarios.forEach((element) {
-                    //   if(element.email == email && element.senha == senha){
-                    //     ok = true;
-                    //   }
-                    // });
-                    // if(ok){
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => HomePage(),
-                    //     ),
-                    //   );
-                    // }
+                    // // botaoLogar(context);
+                    // Usuario usuario =
+                    //     new Usuario(null, null, txtEmail.text, txtSenha.text);
+
+                    String email = txtEmail.text;
+                    String senha = txtSenha.text;
+
+                    bool ok = false;
+
+                    debugPrint('listaDeUsuarios: $listaDeUsuarios');
+
+                    listaDeUsuarios.forEach((element) {
+                      debugPrint('usuario email: ${email}');
+                      debugPrint('usuario senha: ${senha}');
+                      debugPrint('element email: ${element.email}');
+                      debugPrint('element senha: ${element.senha}');
+
+                      debugPrint('email: ${email == element.email }');
+                      debugPrint('senha: ${element.senha == senha}');
+                      if (element.email == email &&
+                          element.senha == senha) {
+                          ok = true;
+                      }
+                    });
+                    debugPrint('ok: $ok');
+                    if (ok) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                      );
+                    }
+
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(
@@ -222,83 +241,86 @@ class LoginPageState extends State<LoginPage> {
     );
   }
 
-  botaoLogar(BuildContext context) {
-    var db = FirebaseFirestore.instance;
+  // botaoLogar(BuildContext context) {
+  //   var db = FirebaseFirestore.instance;
 
-    String nome;
+  //   String nome;
 
-    //retornar dados do documento a partir do idDocument
-    void getDocumento(String idDocumento) async {
-      //Recuperar o documento no Firestore
-      DocumentSnapshot doc = await db.collection("nome").doc(idDocumento).get();
+  //   //retornar dados do documento a partir do idDocument
+  //   void getDocumento(String idDocumento) async {
+  //     //Recuperar o documento no Firestore
+  //     DocumentSnapshot doc = await db.collection("nome").doc(idDocumento).get();
 
-      setState(() {
-        nome = doc.data()["nome"];
-      });
-    }
+  //     setState(() {
+  //       nome = doc.data()["nome"];
+  //     });
+  //   }
 
-    return Container(
-        padding: const EdgeInsets.only(top: 20),
-        child: RaisedButton(
-          child: Text(
-            "Logar",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
-          color: Colors.black,
-          //evento do botão
-          onPressed: () {
-            //jsonRestApiHttp();
-            String email = txtEmail.text;
-            String senha = txtSenha.text;
-            String usOK = "";
+  //   return Container(
+  //       padding: const EdgeInsets.only(top: 20),
+  //       child: RaisedButton(
+  //         child: Text(
+  //           "Logar",
+  //           style: TextStyle(
+  //             color: Colors.white,
+  //             fontSize: 18,
+  //           ),
+  //         ),
+  //         color: Colors.black,
+  //         //evento do botão
+  //         onPressed: () {
+  //           //jsonRestApiHttp();
+  //           String email = txtEmail.text;
+  //           String senha = txtSenha.text;
+  //           String usOK = "";
 
-            //se as condições das validações dos controles não forem atendidas, gera uma mensagem
-            if (formKey.currentState.validate()) {
-              if (this.listaDeUsuarios.length == 0) {
-                return mostraAlert(context);
-              }
-              this.listaDeUsuarios.forEach((element) {
-                if (element.email == email && element.senha == senha) {
-                  usOK = element.email;
-                }
-              });
+  //           //se as condições das validações dos controles não forem atendidas, gera uma mensagem
+  //           if (formKey.currentState.validate()) {
+  //             if (this.listaDeUsuarios.length == 0) {
+  //               return mostraAlert(context);
+  //             }
+  //             this.listaDeUsuarios.forEach((element) {
+  //               if (element.email == email && element.senha == senha) {
+  //                 usOK = element.email;
+  //               }
+  //             });
 
-              if (usOK.length > 0) {
-                Navigator.pushNamed(context, "/home", arguments: txtEmail.text);
-              } else {
-                mostraAlert(context);
-              }
-            }
-          },
-        ));
-  }
+  //             if (usOK.length > 0) {
+  //               Navigator.pushNamed(context, "/home", arguments: txtEmail.text);
+  //             } else {
+  //               mostraAlert(context);
+  //             }
+  //           }
+  //         },
+  //       ));
+  // }
 
-  mostraAlert(BuildContext context) {
-    // configura o button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-        //botaoLogar(context);
-      },
-    );
-    // configura o  AlertDialog
-    AlertDialog alerta = AlertDialog(
-      title: Text("Erro!"),
-      content: Text("Email ou senha inválidos."),
-      actions: [
-        okButton,
-      ],
-    );
-    // exibe o dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alerta;
-      },
-    );
-  }
+ 
+  // mostraAlert(BuildContext context) {
+  //   // configura o button
+  //   Widget okButton = FlatButton(
+  //     child: Text("OK"),
+  //     onPressed: () {
+  //       Navigator.of(context).pop();
+  //       //botaoLogar(context);
+  //     },
+  //   );
+  //   // configura o  AlertDialog
+  //   AlertDialog alerta = AlertDialog(
+  //     title: Text("Erro!"),
+  //     content: Text("Email ou senha inválidos."),
+  //     actions: [
+  //       okButton,
+  //     ],
+  //   );
+  //   // exibe o dialog
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alerta;
+  //     },
+  //   );
+  // }
+
+
 }
