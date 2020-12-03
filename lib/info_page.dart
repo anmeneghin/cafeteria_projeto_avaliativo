@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 class InfoPage extends StatelessWidget {
   Widget titleSection = Container(
       child: Column(
@@ -21,10 +23,21 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+     appBar: AppBar(
+        leading: IconButton(
+        icon: Icon(Icons.arrow_back, color: Colors.black),
+        onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(),
+                ),
+              );
+            },
+      ), 
         title: Text('Cafeteria Sweet Coffe'),
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: [IconButton(icon: Icon(Icons.favorite))],
+        centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor
       ),
       body: Container(
         padding: EdgeInsets.only(

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cafeteria_projeto_avaliativo/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -74,9 +75,20 @@ class _ConfigPageState extends State<ConfigPage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        leading: IconButton(
+        icon: Icon(Icons.arrow_back, color: Colors.black),
+        onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(),
+                ),
+              );
+            },
+      ), 
         title: Text('Cafeteria Sweet Coffe'),
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: [IconButton(icon: Icon(Icons.favorite))],
+        centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor
       ),
       body: Container(
         padding: EdgeInsets.all(40),

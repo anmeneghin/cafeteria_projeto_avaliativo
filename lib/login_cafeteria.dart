@@ -188,11 +188,10 @@ class LoginPageState extends State<LoginPage> {
                       debugPrint('element email: ${element.email}');
                       debugPrint('element senha: ${element.senha}');
 
-                      debugPrint('email: ${email == element.email }');
+                      debugPrint('email: ${email == element.email}');
                       debugPrint('senha: ${element.senha == senha}');
-                      if (element.email == email &&
-                          element.senha == senha) {
-                          ok = true;
+                      if (element.email == email && element.senha == senha) {
+                        ok = true;
                       }
                     });
                     debugPrint('ok: $ok');
@@ -203,14 +202,9 @@ class LoginPageState extends State<LoginPage> {
                           builder: (context) => HomePage(),
                         ),
                       );
+                    } else {
+                        return mostraAlert(context);
                     }
-
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => HomePage(),
-                    //   ),
-                    // );
                   },
                 ),
               ),
@@ -240,87 +234,29 @@ class LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  // botaoLogar(BuildContext context) {
-  //   var db = FirebaseFirestore.instance;
-
-  //   String nome;
-
-  //   //retornar dados do documento a partir do idDocument
-  //   void getDocumento(String idDocumento) async {
-  //     //Recuperar o documento no Firestore
-  //     DocumentSnapshot doc = await db.collection("nome").doc(idDocumento).get();
-
-  //     setState(() {
-  //       nome = doc.data()["nome"];
-  //     });
-  //   }
-
-  //   return Container(
-  //       padding: const EdgeInsets.only(top: 20),
-  //       child: RaisedButton(
-  //         child: Text(
-  //           "Logar",
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //             fontSize: 18,
-  //           ),
-  //         ),
-  //         color: Colors.black,
-  //         //evento do botão
-  //         onPressed: () {
-  //           //jsonRestApiHttp();
-  //           String email = txtEmail.text;
-  //           String senha = txtSenha.text;
-  //           String usOK = "";
-
-  //           //se as condições das validações dos controles não forem atendidas, gera uma mensagem
-  //           if (formKey.currentState.validate()) {
-  //             if (this.listaDeUsuarios.length == 0) {
-  //               return mostraAlert(context);
-  //             }
-  //             this.listaDeUsuarios.forEach((element) {
-  //               if (element.email == email && element.senha == senha) {
-  //                 usOK = element.email;
-  //               }
-  //             });
-
-  //             if (usOK.length > 0) {
-  //               Navigator.pushNamed(context, "/home", arguments: txtEmail.text);
-  //             } else {
-  //               mostraAlert(context);
-  //             }
-  //           }
-  //         },
-  //       ));
-  // }
-
- 
-  // mostraAlert(BuildContext context) {
-  //   // configura o button
-  //   Widget okButton = FlatButton(
-  //     child: Text("OK"),
-  //     onPressed: () {
-  //       Navigator.of(context).pop();
-  //       //botaoLogar(context);
-  //     },
-  //   );
-  //   // configura o  AlertDialog
-  //   AlertDialog alerta = AlertDialog(
-  //     title: Text("Erro!"),
-  //     content: Text("Email ou senha inválidos."),
-  //     actions: [
-  //       okButton,
-  //     ],
-  //   );
-  //   // exibe o dialog
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return alerta;
-  //     },
-  //   );
-  // }
-
-
+  mostraAlert(BuildContext context) {
+    // configura o button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+        //botaoLogar(context);
+      },
+    );
+    // configura o  AlertDialog
+    AlertDialog alerta = AlertDialog(
+      title: Text("Erro!"),
+      content: Text("Email ou senha inválidos."),
+      actions: [
+        okButton,
+      ],
+    );
+    // exibe o dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alerta;
+      },
+    );
+  }
 }
