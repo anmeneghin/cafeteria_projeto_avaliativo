@@ -5,6 +5,8 @@ import 'package:cafeteria_projeto_avaliativo/menu_page.dart';
 
 import 'package:flutter/material.dart';
 
+import 'fornecedor_page.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class HomePageState extends State<HomePage> {
 
   final widgetOptions = [
     new MenuPage(),
-    new InfoPage(),
+    new FornecedorPage(),
     new ConfigPage()
   ];
 

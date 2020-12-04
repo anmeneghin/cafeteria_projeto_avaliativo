@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cafeteria_projeto_avaliativo/login_cafeteria.dart';
 
+import 'fornecedor_page.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -14,6 +16,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.cyan,
       ),
       home: LoginPage(),
+      routes: {
+      '/principal': (context) => FornecedorPage(),
+      '/cadastro': (context) => TelaCadastro(),
+    },
     );
   }
 }
