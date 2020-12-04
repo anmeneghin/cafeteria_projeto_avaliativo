@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 Widget titleSection = Container(
     child: Column(
   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -35,7 +37,19 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            );
+          },
+        ),
         title: Text('Cafeteria Sweet Coffe'),
+        centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(

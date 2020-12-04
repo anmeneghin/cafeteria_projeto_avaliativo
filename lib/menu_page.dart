@@ -1,8 +1,10 @@
- import 'package:cafeteria_projeto_avaliativo/cafe_page.dart';
+import 'package:cafeteria_projeto_avaliativo/cafe_page.dart';
 import 'package:cafeteria_projeto_avaliativo/info_page.dart';
 import 'package:cafeteria_projeto_avaliativo/configuracao_page.dart';
 
 import 'package:flutter/material.dart';
+
+import 'login_cafeteria.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -28,22 +30,25 @@ class MenuPageState extends State<MenuPage> {
     ],
   ));
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: () => Navigator.of(context).pop(),
-      ), 
-        title: Text('Cafeteria Sweet Coffe'),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor
-      ),
-      body: 
-      
-      Container(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(),
+                ),
+              );
+            },
+          ),
+          title: Text('Cafeteria Sweet Coffe'),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).primaryColor),
+      body: Container(
         padding: EdgeInsets.only(top: 20, left: 40, right: 40),
         child: ListView(
           children: [
